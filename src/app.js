@@ -1,8 +1,8 @@
 import express from 'express';
+import { router } from '/tradingsystem-backend/src/controllers/items.js'
 import cors from 'cors';
 
 const app = express();
-const router = express.Router();
 
 app.use(express.json());
 app.use(cors({
