@@ -32,3 +32,11 @@ CREATE TABLE trading_uniform (
 	methods VARCHAR(225),
 	image BYTEA
 );
+
+/* Example insert of books value */
+INSERT INTO trading_books (
+	title, 
+	requirements, 
+	methods, 
+	image)
+VALUES ('calculus', 'fildis', 'trade', decode('89504E470D0A1A0A0000000D49484452', 'hex'));
