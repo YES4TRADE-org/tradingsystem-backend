@@ -1,6 +1,5 @@
 import express from 'express';
 import { getBooks } from '/tradingsystem-backend/src/repository/bookRepository.js';
-import cloudinary from '../utils/cloudinary.js';
 import multer from 'multer';
 import { uploadImage } from '../services/upload-image.js';
 
