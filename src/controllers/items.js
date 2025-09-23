@@ -9,7 +9,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/yes4trade/getbooks', async (req, res) => {
     const data = await getBooks();
-    const books  = data.rows
+    const books  = data.rows;
     console.log(books);
     return res.status(200).json(books);
 });
