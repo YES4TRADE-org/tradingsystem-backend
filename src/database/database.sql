@@ -39,4 +39,4 @@ INSERT INTO trading_books (
 	requirements, 
 	methods, 
 	url)
-VALUES ('calculus', 'fildis', 'trade', decode('89504E470D0A1A0A0000000D49484452', 'hex'));
+VALUES ('calculus', 'fildis', 'trade', 'https://res.cloudinary.com/dkacxbbwh/image/upload/t_media_lib_thumb/cld-sample.jpg');
