@@ -14,7 +14,7 @@ CREATE TABLE trading_books (
 	title VARCHAR(225),
 	requirements VARCHAR(225),
 	methods VARCHAR(225),
-	image BYTEA
+	url VARCHAR(225)
 );
 
 CREATE TABLE trading_notes (
@@ -22,7 +22,7 @@ CREATE TABLE trading_notes (
 	title VARCHAR(225),
 	requirements VARCHAR(225),
 	methods VARCHAR(225),
-	image BYTEA
+	url VARCHAR(225)
 );
 
 CREATE TABLE trading_uniform (
@@ -30,7 +30,7 @@ CREATE TABLE trading_uniform (
 	title VARCHAR(225),
 	requirements VARCHAR(225),
 	methods VARCHAR(225),
-	image BYTEA
+	url VARCHAR(225)
 );
 
 /* Example insert of books value */
@@ -38,5 +38,5 @@ INSERT INTO trading_books (
 	title, 
 	requirements, 
 	methods, 
-	image)
+	url)
 VALUES ('calculus', 'fildis', 'trade', decode('89504E470D0A1A0A0000000D49484452', 'hex'));
