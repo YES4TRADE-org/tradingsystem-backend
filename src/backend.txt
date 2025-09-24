@@ -1,0 +1,281 @@
+
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\app.js -----  
+ type "C:\tradingsystem-backend\src\app.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\app.js -----
+import express from 'express';
+import { uploadTradeRouter } from "./controllers/upload-trade.js";
+import { uploadSellRouter } from "./controllers/upload-sale.js";
+import { itemsRouter } from "./controllers/items.js";
+import multer from 'multer';
+import cors from 'cors';
+
+const app = express();
+const upload = multer({ dest: 'uploads/' });
+
+app.use(cors({ origin: '*' }));
+
+app.use(express.json());
+
+app.use("/", uploadTradeRouter);
+app.use("/", uploadSellRouter);
+app.use("/", itemsRouter);
+
+app.listen(5000, () => {
+    console.log('Server listening to port 5000');
+});
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\controllers\items.js -----  
+ type "C:\tradingsystem-backend\src\controllers\items.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\controllers\items.js -----
+import express from 'express';
+import { getBooks } from '/tradingsystem-backend/src/repository/bookRepository.js';
+import multer from 'multer';
+
+export const itemsRouter = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
+
+itemsRouter .get('/yes4trade/getbooks', async (req, res) => {
+    const data = await getBooks();
+    const books  = data.rows;
+    console.log(books);
+    return res.status(200).json(books);
+});
+
+
+
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\controllers\upload-sale.js -----  
+ type "C:\tradingsystem-backend\src\controllers\upload-sale.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\controllers\upload-sale.js -----
+import express from 'express';
+import multer from 'multer';
+import cloudinary from '../utils/cloudinary.js';  
+import { postProductSell } from '../repository/uploadRepository.js';
+import { createPostProduct } from '../services/logics.js';
+
+export const uploadSellRouter = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
+
+uploadSellRouter.post('/yes4trade/upload-sell', upload.single('image'), async (req, res) => {
+    const { title, methods, email, studentId, program, type, price} = req.body;
+
+    const {method_id, program_id, type_id} = createPostProduct(methods, program, type);
+
+    try {
+       const file = await cloudinary.cloudinary.uploader.upload_stream({ folder: 'yes4trade' }, 
+       (error, result) => {
+           if (error) {
+               console.error('Error uploading to Cloudinary:', error);
+               return res.status(500).json({ error: 'Failed to upload image' });
+           }
+           postProductSell(title, result.secure_url, price, method_id, studentId, program_id, type_id);
+           return res.status(200).json({ message: 'Image uploaded successfully', url: result.secure_url });
+       });
+    } catch (error) {
+        console.error('Error cannot upload file', error);
+        return res.status(500).json({ error: 'Failed to upload image' });
+    }   
+});
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\controllers\upload-trade.js -----  
+ type "C:\tradingsystem-backend\src\controllers\upload-trade.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\controllers\upload-trade.js -----
+import express from 'express';
+import multer from 'multer';
+import cloudinary from '../utils/cloudinary.js';  
+import { postProductTrade } from '../repository/uploadRepository.js';
+import { createPostProduct } from '../services/logics.js';
+
+export const uploadTradeRouter = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
+
+uploadTradeRouter.post('/yes4trade/upload-trade', upload.single('image'), async (req, res) => {
+    const { image, title, methods, email, studentId, program, type, requirement} = req.body;
+
+    const {method_id, program_id, type_id} = createPostProduct(methods, program, type);
+
+    try {
+       const stream = cloudinary.uploader.upload_stream({ folder: 'yes4trade' }, 
+       async (error, result) => {
+           if (error) {
+               console.error('Error uploading to Cloudinary:', error);
+               return res.status(500).json({ error: 'Failed to upload image' });
+           }
+           await postProductTrade(title, requirement, result.secure_url, method_id, studentId, program_id, type_id);
+           return res.status(200).json({ message: 'Image uploaded successfully', url: result.secure_url });
+       });
+    
+    stream.end(req.file.buffer);
+
+    } catch (error) {
+        console.error('Error cannot upload file', error);
+        return res.status(500).json({ error: 'Failed to upload image' });
+    }   
+});
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\database\database.js -----  
+ type "C:\tradingsystem-backend\src\database\database.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\database\database.js -----
+import pkg from 'pg';
+
+const {Pool} = pkg;
+
+export const pool = new Pool({
+    user: 'postgres',
+    password: 'Tokitoclaude0907@',
+    host: 'localhost',
+    port: 5432,
+    database: 'Trading System'
+});
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\database\database.sql -----  
+ type "C:\tradingsystem-backend\src\database\database.sql" 
+) 
+----- FILE: C:\tradingsystem-backend\src\database\database.sql -----
+/* Create all needed tables for database */
+CREATE TABLE users (
+	student_id int PRIMARY KEY,
+	first_name VARCHAR(225),
+	last_name VARCHAR(225),
+	grade_level VARCHAR(225),
+	college VARCHAR(225),
+	email VARCHAR(225),
+	passwords VARCHAR
+);
+
+INSERT INTO users VALUES (2422313, 'rapha', 'san juan', '2ndyear', 'cen', 'raphaelsa@gmail.com', 'asdawda');
+
+CREATE TABLE trading_products (
+	product_id BIGSERIAL PRIMARY KEY,
+	title VARCHAR(225),
+	requirements VARCHAR(225),
+	url VARCHAR(225),
+	price Decimal(10,2),
+	methods INT References methods(method_id),
+	student_id INT References users(student_id),
+	program INT References programs(program_id),
+	type INT References types(type_id),
+);
+
+CREATE TABLE methods (
+	method_id BIGSERIAL PRIMARY KEY,
+	methods VARCHAR(225)
+);
+
+CREATE TABLE programs(
+	program_id BIGSERIAL PRIMARY KEY,
+	programs VARCHAR(225)
+);
+
+CREATE TABLE types(
+	type_id BIGSERIAL PRIMARY KEY,
+	types VARCHAR(225)
+);
+
+/* Example insert of books value */
+INSERT INTO trading_books (
+	title, 
+	requirements, 
+	methods, 
+	url)
+VALUES ('calculus', 'fildis', 'trade', 'https://res.cloudinary.com/dkacxbbwh/image/upload/t_media_lib_thumb/cld-sample.jpg');
+
+INSERT INTO methods (methods) VALUES ('Trade'), ('Sell');
+
+INSERT INTO programs (programs) VALUES ('CIT'), ('CABHA'), ('CEN'), ('CAS'), ('CAM'), ('CAG'), ('CTE');
+
+INSERT INTO types (types) VALUES ('Book'), ('Notes'), ('Uniforms');
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\middlewares\authentication.js -----  
+ type "C:\tradingsystem-backend\src\middlewares\authentication.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\middlewares\authentication.js -----
+
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\repository\bookRepository.js -----  
+ type "C:\tradingsystem-backend\src\repository\bookRepository.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\repository\bookRepository.js -----
+import { pool } from '/tradingsystem-backend/src/database/database.js';
+
+export async function getBooks() {
+    return await pool.query(
+        `SELECT * FROM trading_books`
+    );
+};
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\repository\selectRepository.js -----  
+ type "C:\tradingsystem-backend\src\repository\selectRepository.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\repository\selectRepository.js -----
+import { pool } from '../database/database.js';
+
+export async function getProgramId(program) {
+    return await pool.query('SELECT program_id FROM programs WHERE programs = $1', [program]);
+}
+
+export async function getTypeId(type) {
+    return await pool.query('SELECT type_id FROM types WHERE types = $1', [type]);
+}
+
+export async function getMethodId(method) {
+    return await pool.query('SELECT method_id FROM methods WHERE methods = $1', [method]);
+}
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\repository\uploadRepository.js -----  
+ type "C:\tradingsystem-backend\src\repository\uploadRepository.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\repository\uploadRepository.js -----
+import { pool } from '../database/database.js';
+
+export async function postProductTrade(title, requirements, url, methods, student_id, program, type) {
+    return await pool.query(
+       `INSERT INTO trading_products (title, requirements, url, methods, student_id, program, type) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [title, requirements, url, methods, student_id, program, type] 
+    );
+}
+
+export async function postProductSell(title, url, price, methods, student_id, program, type) {
+    return await pool.query(
+       `INSERT INTO trading_products (title, url, price, methods, student_id, program, type) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [title, url, price, methods, student_id, program, type] 
+    );
+}
+
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\services\logics.js -----  
+ type "C:\tradingsystem-backend\src\services\logics.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\services\logics.js -----
+import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
+
+export async function createPostProduct(methods, program, type){
+    const method_id = await getMethodId(methods);
+    const program_id = await getProgramId(program);
+    const type_id = await getTypeId(type);
+
+    return {method_id, program_id, type_id};
+}
+
+C:\tradingsystem-backend\src>(
+echo ----- FILE: C:\tradingsystem-backend\src\utils\cloudinary.js -----  
+ type "C:\tradingsystem-backend\src\utils\cloudinary.js" 
+) 
+----- FILE: C:\tradingsystem-backend\src\utils\cloudinary.js -----
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({ 
+    cloud_name: 'dkacxbbwh', 
+    api_key: '182463543584545', 
+    api_secret: 'yRU21weJxQ4I_9EiydrY5V9qxMY' 
+});
+
+export default cloudinary;
