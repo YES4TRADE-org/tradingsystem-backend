@@ -1,12 +1,13 @@
 import express from 'express';
 import multer from 'multer';
-import { uploadImage } from '../services/upload-image.js';
+import { uploadImage } from '../repository/uploadRepository.js';
 
 export const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/yes4trade/upload', upload.single('image'), async (req, res) => {
     const { title, requirements, methods, email, studentId, program, type, price } = req.body;
+
     try {
        const file = await cloudinary.cloudinary.uploader.upload_stream({ folder: 'yes4trade' }, 
        (error, result) => {

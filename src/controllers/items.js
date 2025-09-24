@@ -1,7 +1,7 @@
 import express from 'express';
 import { getBooks } from '/tradingsystem-backend/src/repository/bookRepository.js';
 import multer from 'multer';
-import { uploadImage } from '../services/upload-image.js';
+import { uploadImage } from '../services/logics.js';
 
 export const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
