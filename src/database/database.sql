@@ -9,28 +9,31 @@ CREATE TABLE users (
 	passwords VARCHAR
 );
 
-CREATE TABLE trading_books (
-	books_id BIGSERIAL PRIMARY KEY,
+CREATE TABLE trading_products (
+	product_id BIGSERIAL PRIMARY KEY,
 	title VARCHAR(225),
 	requirements VARCHAR(225),
-	methods VARCHAR(225),
-	url VARCHAR(225)
+	url VARCHAR(225),
+	price Decimal(10,2),
+	methods INT References methods(method_id),
+	student_id INT References users(student_id),
+	program INT References programs(program_id),
+	type INT References types(type_id),
 );
 
-CREATE TABLE trading_notes (
-	notes_id BIGSERIAL PRIMARY KEY,
-	title VARCHAR(225),
-	requirements VARCHAR(225),
-	methods VARCHAR(225),
-	url VARCHAR(225)
+CREATE TABLE methods (
+	method_id BIGSERIAL PRIMARY KEY,
+	methods VARCHAR(225)
 );
 
-CREATE TABLE trading_uniform (
-	uniform_id BIGSERIAL PRIMARY KEY,
-	title VARCHAR(225),
-	requirements VARCHAR(225),
-	methods VARCHAR(225),
-	url VARCHAR(225)
+CREATE TABLE programs(
+	program_id BIGSERIAL PRIMARY KEY,
+	programs VARCHAR(225)
+);
+
+CREATE TABLE types(
+	type_id BIGSERIAL PRIMARY KEY,
+	types VARCHAR(225)
 );
 
 /* Example insert of books value */
@@ -40,3 +43,9 @@ INSERT INTO trading_books (
 	methods, 
 	url)
 VALUES ('calculus', 'fildis', 'trade', 'https://res.cloudinary.com/dkacxbbwh/image/upload/t_media_lib_thumb/cld-sample.jpg');
+
+INSERT INTO methods (methods) VALUES ('Trade'), ('Sell');
+
+INSERT INTO programs (programs) VALUES ('CIT'), ('CABHA'), ('CEN'), ('CAS'), ('CAM'), ('CAG'), ('CTE');
+
+INSERT INTO types (types) VALUES ('Book'), ('Notes'), ('Uniforms');
