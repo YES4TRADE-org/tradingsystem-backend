@@ -2,16 +2,16 @@ import { pool } from '../database/database.js';
 
 export async function postProductTrade(title, requirements, url, methods, student_id, program, type) {
     return await pool.query(
-       `INSERT INTO trading_products (title, requirements, url, price, methods, student_id, program, type) 
-        VALUES ($1, $2, $3, $4)`,
+       `INSERT INTO trading_products (title, requirements, url, methods, student_id, program, type) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
         [title, requirements, url, methods, student_id, program, type] 
     );
 }
 
 export async function postProductSell(title, url, price, methods, student_id, program, type) {
     return await pool.query(
-       `INSERT INTO trading_products (title, requirements, url, price, methods, student_id, program, type) 
-        VALUES ($1, $2, $3, $4)`,
+       `INSERT INTO trading_products (title, url, price, methods, student_id, program, type) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
         [title, url, price, methods, student_id, program, type] 
     );
 }

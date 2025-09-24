@@ -1,14 +1,20 @@
 import express from 'express';
-import { router } from '/tradingsystem-backend/src/controllers/items.js'
+import { uploadTradeRouter } from "./controllers/upload-trade.js";
+import { uploadSellRouter } from "./controllers/upload-sale.js";
+import { itemsRouter } from "./controllers/items.js";
+import multer from 'multer';
 import cors from 'cors';
 
 const app = express();
+const upload = multer({ dest: 'uploads/' });
+
+app.use(cors({ origin: '*' }));
 
 app.use(express.json());
-app.use(cors({
-    origin: '*'
-}));
-app.use('/', router);
+
+app.use("/", uploadTradeRouter);
+app.use("/", uploadSellRouter);
+app.use("/", itemsRouter);
 
 app.listen(5000, () => {
     console.log('Server listening to port 5000');

@@ -1,4 +1,4 @@
-import { pool } from '../database/db.js';
+import { pool } from '../database/database.js';
 
 export async function getProgramId(program) {
     return await pool.query('SELECT program_id FROM programs WHERE programs = $1', [program]);

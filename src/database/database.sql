@@ -9,6 +9,8 @@ CREATE TABLE users (
 	passwords VARCHAR
 );
 
+INSERT INTO users VALUES (2422313, 'rapha', 'san juan', '2ndyear', 'cen', 'raphaelsa@gmail.com', 'asdawda');
+
 CREATE TABLE trading_products (
 	product_id BIGSERIAL PRIMARY KEY,
 	title VARCHAR(225),
