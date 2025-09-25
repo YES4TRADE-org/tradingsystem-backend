@@ -20,7 +20,7 @@ CREATE TABLE trading_products (
 	methods INT References methods(method_id),
 	student_id INT References users(student_id),
 	program INT References programs(program_id),
-	type INT References types(type_id),
+	type INT References types(type_id)
 );
 
 CREATE TABLE methods (
