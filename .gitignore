@@ -6,6 +6,8 @@ node_modules/
 # Cloudinary configuration
 src/utils/cloudinary.js
 
+.env.local
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
