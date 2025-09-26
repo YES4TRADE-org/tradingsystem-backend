@@ -3,11 +3,12 @@ import multer from 'multer';
 import cloudinary from '../utils/cloudinary.js';  
 import { postProductSell } from '../repository/uploadRepository.js';
 import { createPostProduct } from '../services/logics.js';
+import { authenticated } from '../middlewares/authentication.js';
 
 export const uploadSellRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-uploadSellRouter.post('/yes4trade/upload-sell', upload.single('image'), async (req, res) => {
+uploadSellRouter.post('/yes4trade/upload-sell',authenticated, upload.single('image'), async (req, res) => {
     const { title, methods, email, studentId, program, type, price} = req.body;
 
     if(!req.file){
