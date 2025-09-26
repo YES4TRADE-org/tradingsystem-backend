@@ -10,6 +10,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 uploadTradeRouter.post('/yes4trade/upload-trade', upload.single('image'), async (req, res) => {
     const { image, title, methods, email, studentId, program, type, requirement} = req.body;
 
+    if(!req.file){
+        return res.status(404).json({ message: 'Error req file is undefined or empty'});
+    }
+
     const {method_id, program_id, type_id} = await createPostProduct(methods, program, type);
 
     try {
