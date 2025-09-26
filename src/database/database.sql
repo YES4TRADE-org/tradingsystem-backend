@@ -38,14 +38,7 @@ CREATE TABLE types(
 	types VARCHAR(225)
 );
 
-/* Example insert of books value */
-INSERT INTO trading_books (
-	title, 
-	requirements, 
-	methods, 
-	url)
-VALUES ('calculus', 'fildis', 'trade', 'https://res.cloudinary.com/dkacxbbwh/image/upload/t_media_lib_thumb/cld-sample.jpg');
-
+/* Example insert of value */
 INSERT INTO methods (methods) VALUES ('Trade'), ('Sell');
 
 INSERT INTO programs (programs) VALUES ('CIT'), ('CABHA'), ('CEN'), ('CAS'), ('CAM'), ('CAG'), ('CTE');

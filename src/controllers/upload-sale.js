@@ -10,13 +10,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 uploadSellRouter.post('/yes4trade/upload-sell', upload.single('image'), async (req, res) => {
     const { title, methods, email, studentId, program, type, price} = req.body;
 
-    console.log(studentId);
+    if(!req.file){
+        return res.status(404).json({ message: 'Req file is undefined or empty'});
+    }
 
     const {method_id, program_id, type_id} = await createPostProduct(methods, program, type);
-
-    console.log(method_id, program_id, type_id);
-
-    console.log( method_id, program_id, type_id);
 
     try {
        const stream = cloudinary.uploader.upload_stream({ folder: 'yes4trade' }, 
