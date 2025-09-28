@@ -35,3 +35,5 @@ uploadSellRouter.post('/yes4trade/upload-sell',authenticated, upload.single('ima
         return res.status(500).json({ error: 'Failed to upload image' });
     }   
 });
+
+export default uploadSellRouter;
