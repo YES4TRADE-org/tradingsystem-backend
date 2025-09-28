@@ -6,8 +6,9 @@ export const checkEmail = (email) => {
     );
 }
 
-export const addAccount = () => {
+export const addAccount = (studentId, firstname, lastname, grade, college, email, passwords) => {
     return pool.query(
-        `INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`
-    )
+        `INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`, [studentId, firstname, lastname,
+            grade, college, email, passwords]
+    );
 }

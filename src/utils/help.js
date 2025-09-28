@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 export const checkIfSlsu = (email) => {
     const removeAt = email.split('@');
     const seperate = removeAt[1].split('.');
@@ -24,4 +26,9 @@ export const checkStudentId = (studentId) => {
         case '3': return {grade: '3', boolean: true}; break;
         case '2': return {grade: '4', boolean: true}; break;
     }
+}
+
+export const hashPass = async (password) => {
+    const bcryptPass = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, bcryptPass);
 }
