@@ -18,7 +18,7 @@ signupRouter.post('/yes4trade/auth/signup', async (req, res) => {
             }
         }   
     } 
-    return res.status(409).json({ message: 'You already have an account!'});
+    return res.status(409).json({ message: 'You already have an account or invalid student id!'});
 });
 
 export default signupRouter;
