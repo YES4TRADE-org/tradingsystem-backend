@@ -11,7 +11,17 @@ export const checkIfSlsu = (email) => {
 
 export const checkStudentId = (studentId) => {
     if(studentId.length !== 9) {
-        return false;
+        return {
+            grade: null,
+            boolean: false
+        };
     }
-    return true;
+    const grade = studentId.split('')[1];
+    
+    switch(grade){
+        case '5': return {grade: '1', boolean: true}; break;
+        case '4': return {grade: '2', boolean: true}; break;
+        case '3': return {grade: '3', boolean: true}; break;
+        case '2': return {grade: '4', boolean: true}; break;
+    }
 }

@@ -5,3 +5,9 @@ export const checkEmail = (email) => {
         'SELECT * FROM users WHERE users.email = $1', [ email ]
     );
 }
+
+export const addAccount = () => {
+    return pool.query(
+        `INSERT INTO users `
+    )
+}

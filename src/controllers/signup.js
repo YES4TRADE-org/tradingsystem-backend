@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkIfSlsu } from '../utils/help';
+import { checkIfSlsu, checkStudentId } from '../utils/help';
 import { checkEmailAvail } from '../services/logics';
 
 
@@ -8,7 +8,7 @@ const signupRouter = express.Router();
 signupRouter.post('/yes4trade/auth/signup', (req, res) => {
     const { email, studentId, firstname, lastname, password, program} = req.body;
 
-    if(checkIfSlsu(email)){
+    if(checkIfSlsu(email) && checkStudentId(studentId)){
         if(checkEmailAvail){
             
         }   
