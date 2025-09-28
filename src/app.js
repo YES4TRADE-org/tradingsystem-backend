@@ -1,7 +1,7 @@
 import express from 'express';
-import { uploadTradeRouter } from "./controllers/upload-trade.js";
-import { uploadSellRouter } from "./controllers/upload-sale.js";
-import { itemsRouter } from "./controllers/items.js";
+import uploadTradeRouter from "./controllers/upload-trade.js";
+import uploadSellRouter from "./controllers/upload-sale.js";
+import itemsRouter from "./controllers/items.js";
 import multer from 'multer';
 import cors from 'cors';
 

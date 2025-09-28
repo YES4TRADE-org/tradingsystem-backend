@@ -2,7 +2,7 @@ import express from 'express';
 import { getAllPost } from '/tradingsystem-backend/src/repository/itemsRepository.js';
 import { authenticated } from '../middlewares/authentication.js';
 
-export const itemsRouter = express.Router();
+const itemsRouter = express.Router();
 
 itemsRouter .get('/yes4trade/getbooks', authenticated, async (req, res) => {
     const data = await getAllPost();
@@ -11,4 +11,4 @@ itemsRouter .get('/yes4trade/getbooks', authenticated, async (req, res) => {
     return res.status(200).json(books);
 });
 
-
+export default itemsRouter;
