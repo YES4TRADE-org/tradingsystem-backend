@@ -3,7 +3,8 @@ import express from 'express';
 const signupRouter = express.Router();
 
 signupRouter.post('/yes4trade/auth/signup', (req, res) => {
-
+    const { email, studentId, firstname, lastname, password, program} = req.body;
+    
 });
 
 export default signupRouter;
