@@ -8,3 +8,10 @@ export const checkIfSlsu = (email) => {
 
     return false;
 }
+
+export const checkStudentId = (studentId) => {
+    if(studentId.length !== 9) {
+        return false;
+    }
+    return true;
+}

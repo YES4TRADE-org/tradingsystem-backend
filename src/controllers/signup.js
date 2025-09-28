@@ -11,7 +11,7 @@ signupRouter.post('/yes4trade/auth/signup', (req, res) => {
     if(checkIfSlsu(email)){
         if(checkEmailAvail){
             
-        }
+        }   
         return res.status(409).json({ message: 'You already have an account!'});
     } 
 
