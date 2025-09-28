@@ -8,6 +8,6 @@ export const checkEmail = (email) => {
 
 export const addAccount = () => {
     return pool.query(
-        `INSERT INTO users `
+        `INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`
     )
 }

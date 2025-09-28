@@ -1,4 +1,5 @@
-import {getMethodId, getProgramId, getTypeId, checkEmail} from '../repository/selectRepository.js';
+import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
+import { checkEmail } from '../repository/userRepository.js';
 
 export async function createPostProduct(methods, program, type){
     const data1 = await getMethodId(methods);
