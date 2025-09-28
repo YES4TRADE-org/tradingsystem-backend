@@ -6,13 +6,14 @@ import { addAccount } from '../repository/userRepository.js';
 const signupRouter = express.Router();
 
 signupRouter.post('/yes4trade/auth/signup', async (req, res) => {
-    const { email, studentId, firstname, lastname, password, program} = req.body;
+    console.log(req.body);
+    const { username, studentId, firstname, lastname, password, program} = req.body;
 
-    if(checkIfSlsu(email) && checkStudentId(studentId).boolean){
+    if(checkIfSlsu(username) && checkStudentId(studentId).boolean){
         if(checkEmailAvail){
             const hashPassword = await hashPass(password);
-            const data = await addAccount(studentId, firstname, lastname, checkStudentId(studentId).grade,
-                program, email, hashPassword);
+            const data = await addAccount(checkStudentId(studentId).id, firstname, lastname, checkStudentId(studentId).grade,
+                program, username, hashPassword);
             if(data.rowCount === 1){
                 return res.status(200).json({message: 'You have sign up successfully!'});
             }

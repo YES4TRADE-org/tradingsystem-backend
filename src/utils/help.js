@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
-export const checkIfSlsu = (email) => {
-    const removeAt = email.split('@');
+export const checkIfSlsu = (username) => {
+    const removeAt = username.split('@');
     const seperate = removeAt[1].split('.');
 
     if(seperate[0] === 'slsu' && seperate[1] === 'edu' && seperate[2] === 'ph') {
@@ -18,13 +18,14 @@ export const checkStudentId = (studentId) => {
             boolean: false
         };
     }
+    const id = studentId.split('-')[1];
     const grade = studentId.split('')[1];
     
     switch(grade){
-        case '5': return {grade: '1', boolean: true}; break;
-        case '4': return {grade: '2', boolean: true}; break;
-        case '3': return {grade: '3', boolean: true}; break;
-        case '2': return {grade: '4', boolean: true}; break;
+        case '5': return {grade: '1', boolean: true, id: id }; break;
+        case '4': return {grade: '2', boolean: true, id: id }; break;
+        case '3': return {grade: '3', boolean: true, id: id }; break;
+        case '2': return {grade: '4', boolean: true, id: id }; break;
     }
 }
 
