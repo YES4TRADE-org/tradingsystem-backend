@@ -1,4 +1,4 @@
-import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
+import {getMethodId, getProgramId, getTypeId, checkEmail} from '../repository/selectRepository.js';
 
 export async function createPostProduct(methods, program, type){
     const data1 = await getMethodId(methods);
@@ -13,4 +13,14 @@ export async function createPostProduct(methods, program, type){
 
 
     return {method_id, program_id, type_id};
+}
+
+export async function checkEmailAvail(email) {
+    const data = await checkEmail(email);
+
+    if(data.rows !== null){
+        return false;
+    }
+    
+    return true;
 }
