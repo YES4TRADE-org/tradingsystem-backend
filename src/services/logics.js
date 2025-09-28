@@ -19,7 +19,9 @@ export async function createPostProduct(methods, program, type){
 export async function checkEmailAvail(username) {
     const data = await checkEmail(username);
 
-    if(data.rows !== null){
+    console.log(data);
+
+    if(data.rowCount !== 0){
         return false;
     }
     
