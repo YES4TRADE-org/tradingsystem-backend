@@ -16,8 +16,8 @@ export async function createPostProduct(methods, program, type){
     return {method_id, program_id, type_id};
 }
 
-export async function checkEmailAvail(email) {
-    const data = await checkEmail(email);
+export async function checkEmailAvail(username) {
+    const data = await checkEmail(username);
 
     if(data.rows !== null){
         return false;

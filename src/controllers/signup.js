@@ -9,8 +9,10 @@ signupRouter.post('/yes4trade/auth/signup', async (req, res) => {
     console.log(req.body);
     const { username, studentId, firstname, lastname, password, program} = req.body;
 
+    const check = await checkEmailAvail(username);
+
     if(checkIfSlsu(username) && checkStudentId(studentId).boolean){
-        if(checkEmailAvail){
+        if(check){
             const hashPassword = await hashPass(password);
             const data = await addAccount(checkStudentId(studentId).id, firstname, lastname, checkStudentId(studentId).grade,
                 program, username, hashPassword);
