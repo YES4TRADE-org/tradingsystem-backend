@@ -12,3 +12,9 @@ export const addAccount = (studentId, firstname, lastname, grade, college, email
             grade, college, email, passwords]
     );
 }
+
+export const getUserId = (email) => {
+    return pool.query(
+        'SELECT users.student_id FROM users WHERE users.email = $1', [ email ]
+    );
+}

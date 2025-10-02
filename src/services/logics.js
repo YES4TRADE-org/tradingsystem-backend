@@ -1,6 +1,7 @@
 import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
-import { checkEmail } from '../repository/userRepository.js';
+import { checkEmail, getUserId } from '../repository/userRepository.js';
 import { encryption } from '../utils/help.js'
+import { createToken } from '../middlewares/authentication.js';
 
 export async function createPostProduct(methods, program, type){
     const data1 = await getMethodId(methods);
@@ -47,5 +48,17 @@ export async function checkPassword(email, origPassword){
     }
 
     return true;
+}
 
+export async function generateToken(email){
+
+    const data = await getUserId(email);
+
+    const rows = data.rows[1];
+
+    console.log(rows);
+
+    const studentId = rows.student_id;
+
+    return createToken(studentId);
 }

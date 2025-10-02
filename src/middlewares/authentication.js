@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { checkPassword } from "../services/logics.js";
 
-export const createToken = (email) => {
-    const payLoad = {username: email};
+export const createToken = (student_id) => {
+    const payLoad = {studentId: student_id};
     const token = jwt.sign(payLoad, `${process.env.SECRET_KEY}`, {expiresIn: '1h'});
     return token;
 }
