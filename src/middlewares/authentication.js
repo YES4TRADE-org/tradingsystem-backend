@@ -32,12 +32,16 @@ export const authenticated = (req, res, next) => {
 export const registration = async (req, res, next) => {
     const { username, password} = req.body;
 
-    const checkPasswords = await checkPassword(username, password);
-    
     const check = username.split('@')[1];
 
-    if(check !== 'slsu.edu.ph' || !checkPasswords ){
+    if(check !== 'slsu.edu.ph'){
         return res.status(401).json({ message: 'Invalid email, must be an SLSU email!' });
+    } 
+
+    const checkPasswords = await checkPassword(username, password);
+
+    if(!checkPasswords){
+        return res.status(401).json({ message: 'Invalid account!' });
     }
 
     console.log('hello this is debugging');

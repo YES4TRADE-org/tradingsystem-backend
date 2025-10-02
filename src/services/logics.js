@@ -34,6 +34,10 @@ export async function checkPassword(email, origPassword){
 
     const rows = data.rows[0];
 
+    if(data.rowCount === 0){
+        return false;
+    }
+
     const hashPassword = rows.passwords;
 
     const encrpyted = await encryption(hashPassword, origPassword);
