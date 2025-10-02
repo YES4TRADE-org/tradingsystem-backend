@@ -27,3 +27,15 @@ export const authenticated = (req, res, next) => {
         next();
     });
 }
+
+export const registartion = (req, res, next) => {
+    const { username, password} = req.body;
+    
+    const check = username.split('@')[1];
+
+    if(check !== 'slsu.edu.ph'){
+        return res.status(401).json({ message: 'Invalid email, must be an SLSU email!' })
+    }
+
+    
+}
