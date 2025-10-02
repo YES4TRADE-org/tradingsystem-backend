@@ -31,10 +31,14 @@ export async function checkEmailAvail(username) {
 
 export async function checkPassword(email, origPassword){
     const data = await checkEmail(email);
-    
-    const hashPassword = data.rows[1];
 
-    if(!encryption(hashPassword, origPassword)){
+    const rows = data.rows[0];
+
+    const hashPassword = rows.passwords;
+
+    const encrpyted = await encryption(hashPassword, origPassword);
+
+    if(!encrpyted){
         return false;
     }
 

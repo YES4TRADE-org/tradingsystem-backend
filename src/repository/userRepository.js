@@ -2,7 +2,7 @@ import { pool } from '/tradingsystem-backend/src/database/database.js';
 
 export const checkEmail = (email) => {
     return pool.query(
-        'SELECT users.password FROM users WHERE users.email = $1', [ email ]
+        'SELECT users.passwords FROM users WHERE users.email = $1', [ email ]
     );
 }
 

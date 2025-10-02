@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { checkPassword } from "../services/logics";
+import { checkPassword } from "../services/logics.js";
 
 export const createToken = (email) => {
     const payLoad = {username: email};
@@ -29,14 +29,17 @@ export const authenticated = (req, res, next) => {
     });
 }
 
-export const registration = (req, res, next) => {
+export const registration = async (req, res, next) => {
     const { username, password} = req.body;
+
+    const checkPasswords = await checkPassword(username, password);
     
     const check = username.split('@')[1];
 
-    if(check !== 'slsu.edu.ph' || !checkPassword(username, password) ){
+    if(check !== 'slsu.edu.ph' || !checkPasswords ){
         return res.status(401).json({ message: 'Invalid email, must be an SLSU email!' });
     }
 
+    console.log('hello this is debugging');
     next();
 }
