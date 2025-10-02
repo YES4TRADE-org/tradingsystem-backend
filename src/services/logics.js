@@ -1,6 +1,6 @@
 import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
 import { checkEmail } from '../repository/userRepository.js';
-import { }
+import { encryption } from '../utils/help.js'
 
 export async function createPostProduct(methods, program, type){
     const data1 = await getMethodId(methods);
@@ -29,9 +29,15 @@ export async function checkEmailAvail(username) {
     return true;
 }
 
-export async function getPassword(email){
-    const password = await checkEmail(email);
+export async function checkPassword(email, origPassword){
+    const data = await checkEmail(email);
     
-    const 
+    const hashPassword = data.rows[1];
+
+    if(!encryption(hashPassword, origPassword)){
+        return false;
+    }
+
+    return true;
 
 }
