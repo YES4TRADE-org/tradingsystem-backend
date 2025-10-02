@@ -37,5 +37,5 @@ export const registartion = (req, res, next) => {
         return res.status(401).json({ message: 'Invalid email, must be an SLSU email!' })
     }
 
-    
+        
 }

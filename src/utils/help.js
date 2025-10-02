@@ -31,3 +31,7 @@ export const hashPass = async (password) => {
     const bcryptPass = await bcrypt.genSalt(10);
     return bcrypt.hash(password, bcryptPass);
 }
+
+export const encryption = async (hashPassword, origPassword) => {
+    return bcrypt.compare(origPassword, hashPassword);
+}

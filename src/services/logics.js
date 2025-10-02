@@ -1,5 +1,6 @@
 import {getMethodId, getProgramId, getTypeId} from '../repository/selectRepository.js';
 import { checkEmail } from '../repository/userRepository.js';
+import { }
 
 export async function createPostProduct(methods, program, type){
     const data1 = await getMethodId(methods);
@@ -26,4 +27,11 @@ export async function checkEmailAvail(username) {
     }
     
     return true;
+}
+
+export async function getPassword(email){
+    const password = await checkEmail(email);
+    
+    const 
+
 }
