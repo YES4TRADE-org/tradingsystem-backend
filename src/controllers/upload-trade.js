@@ -25,7 +25,7 @@ uploadTradeRouter.post('/yes4trade/upload-trade', authenticated, upload.single('
                console.error('Error uploading to Cloudinary:', error);
                return res.status(500).json({ error: 'Failed to upload image' });
            }
-           await postProductTrade(title, requirement, result.secure_url, method_id, studentId, program_id, type_id);
+           await postProductTrade(title, requirement, result.secure_url, method_id, studentId, program_id, type_id, email);
            return res.status(200).json({ message: 'Image uploaded successfully', url: result.secure_url });
        });
     
