@@ -18,23 +18,22 @@ uploadTradeRouter.post('/yes4trade/upload-trade', authenticated, upload.single('
 
     const {method_id, program_id, type_id} = await createPostProduct(methods, program, type);
 
-    try {
        const stream = cloudinary.uploader.upload_stream({ folder: 'yes4trade' }, 
        async (error, result) => {
            if (error) {
-               console.error('Error uploading to Cloudinary:', error);
-               return res.status(500).json({ error: 'Failed to upload image' });
+               return res.status(500).json({ message: 'Invalid input of products!' });
            }
-           await postProductTrade(title, requirement, result.secure_url, method_id, studentId, program_id, type_id, email);
-           return res.status(200).json({ message: 'Image uploaded successfully', url: result.secure_url });
-       });
-    
-    stream.end(req.file.buffer);
 
-    } catch (error) {
-        console.error('Error cannot upload file', error);
-        return res.status(500).json({ error: 'Failed to upload image' });
-    }   
+          try {
+            await postProductTrade(title, requirement, result.secure_url, method_id, studentId, program_id, type_id, email);
+            return res.status(200).json({ message: 'Image uploaded successfully', url: result.secure_url });
+          } catch(err){
+             return res.status(500).json({ message: 'Invalid input of products!' });
+          }
+           
+       });
+        stream.end(req.file.buffer);
+
 });
 
 export default uploadTradeRouter;
