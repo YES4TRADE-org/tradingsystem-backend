@@ -4,7 +4,7 @@ import { authenticated } from '../middlewares/authentication.js';
 
 const itemsRouter = express.Router();
 
-itemsRouter .get('/yes4trade/getbooks', authenticated, async (req, res) => {
+itemsRouter .get('/yes4trade/getbooks',authenticated , async (req, res) => {
     const data = await getAllPost();
     const books  = data.rows;
     console.log(books);
