@@ -4,9 +4,10 @@ import { generateToken } from "../services/logics.js";
 
 const loginRouter = express.Router();
 
-loginRouter.post('/yes4trade/auth/login',registration ,(req, res) => {
-    const { username } = req.body.username;
-    return res.status(200).json({ token: generateToken(username)});
+loginRouter.post('/yes4trade/auth/login',registration , async (req, res) => {
+    const { username } = req.body;
+    const token = await generateToken(username);
+    return res.status(200).json({ token: token });
 });
 
 export default loginRouter;

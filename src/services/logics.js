@@ -12,9 +12,6 @@ export async function createPostProduct(methods, program, type){
     const program_id = data2.rows[0].program_id;
     const type_id = data3.rows[0].type_id;
 
-    console.log(type_id);
-
-
     return {method_id, program_id, type_id};
 }
 
@@ -54,9 +51,7 @@ export async function generateToken(email){
 
     const data = await getUserId(email);
 
-    const rows = data.rows[1];
-
-    console.log(rows);
+    const rows = data.rows[0];
 
     const studentId = rows.student_id;
 

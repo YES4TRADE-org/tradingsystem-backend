@@ -44,6 +44,5 @@ export const registration = async (req, res, next) => {
         return res.status(401).json({ message: 'Invalid account!' });
     }
 
-    console.log('hello this is debugging');
     next();
 }
